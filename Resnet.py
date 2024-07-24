@@ -1,9 +1,9 @@
-from ResnetBlock import ResnetBlock
+from ResNetBlock import ResNetBlock
 import torch
 import torch.nn as nn
 from typing import List
 
-class Resnet(nn.Module):
+class ResNet(nn.Module):
     def __init__(self,
                  layers: List[int],
                  image_channels: int,
@@ -53,11 +53,11 @@ class Resnet(nn.Module):
                                     nn.BatchNorm2d(out_channels * 4)
                                 )
 
-        resnet_blocks.append(ResnetBlock(self.in_channels,out_channels,identity_downsample,stride))
+        resnet_blocks.append(ResNetBlock(self.in_channels,out_channels,identity_downsample,stride))
         self.in_channels = out_channels * 4 
 
         for i in range(num_resnet_blocks - 1):
-            resnet_blocks.append(ResnetBlock(self.in_channels, out_channels))
+            resnet_blocks.append(ResNetBlock(self.in_channels, out_channels))
         
         return nn.Sequential(*resnet_blocks)
         
